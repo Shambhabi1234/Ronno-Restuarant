@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ronno — Modern Bengali Kitchen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;0,700;1,500&family=Work+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FBF3E7;
+    --ink:#2B211B;
+    --ink-soft:#6B5D4F;
+    --teal:#0F4C43;
+    --teal-soft:#E4EDE9;
+    --mustard:#E3A008;
+    --brick:#9A3324;
+    --line:#E3D9C8;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Work Sans',sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+  ::selection{background:var(--mustard);color:var(--ink);}
+  :focus-visible{outline:3px solid var(--brick);outline-offset:3px;}
+  .disp{font-family:'Fraunces',serif;}
+  .mono{font-family:'Space Mono',monospace;}
+  img{max-width:100%;display:block;}
+
+  /* ---------- nav ---------- */
+  .nav{
+    max-width:1180px;
+    margin:0 auto;
+    padding:26px 32px 0;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+  }
+  .wordmark{
+    font-family:'Fraunces',serif;
+    font-weight:700;
+    font-size:22px;
+    letter-spacing:0.01em;
+  }
+  .wordmark span{color:var(--brick);}
+  .nav-links{
+    display:flex;
+    gap:34px;
+    font-size:14px;
+  }
+  .nav-links a{text-decoration:none;}
+  .nav-links a:hover{color:var(--brick);}
+  .nav-cta{
+    font-size:13px;
+    background:var(--teal);
+    color:var(--paper);
+    padding:11px 20px;
+    border-radius:2px;
+    text-decoration:none;
+  }
+  .nav-cta:hover{background:var(--brick);}
+
+  /* ---------- hero ---------- */
+  .hero{
+    max-width:1180px;
+    margin:34px auto 0;
+    padding:0 32px;
+  }
+  .hero-frame{
+    position:relative;
+    background:var(--teal);
+    color:var(--paper);
+    border-radius:6px;
+    padding:80px 48px 0;
+    overflow:hidden;
+  }
+  .hero-bg{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    opacity:0.28;
+    mix-blend-mode:luminosity;
+  }
+  .hero-frame::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(180deg, rgba(15,76,67,0.55), rgba(15,76,67,0.92) 70%);
+  }
+  .hero-frame > *:not(.hero-bg){position:relative;z-index:1;}
+  .motif-corner{
+    position:absolute;
+    width:74px;height:74px;
+    opacity:0.55;
+  }
+  .motif-corner.tl{top:22px;left:22px;}
+  .motif-corner.tr{top:22px;right:22px;transform:scaleX(-1);}
+  .hero-eyebrow{
+    font-family:'Space Mono',monospace;
+    font-size:12.5px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--mustard);
+    text-align:center;
+    margin-bottom:18px;
+  }
+  .hero-title{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-style:italic;
+    font-size:clamp(44px,7.5vw,88px);
+    text-align:center;
+    line-height:1;
+    margin:0;
+  }
+  .hero-title .not-italic{font-style:normal;font-weight:700;}
+  .hero-sub{
+    text-align:center;
+    font-size:16px;
+    max-width:460px;
+    margin:24px auto 0;
+    color:#DCE7E3;
+    line-height:1.7;
+  }
+  .hero-cta{
+    display:flex;
+    justify-content:center;
+    gap:14px;
+    margin:34px 0 0;
+  }
+  .btn{
+    font-family:'Space Mono',monospace;
+    font-size:13px;
+    padding:13px 24px;
+    text-decoration:none;
+    border-radius:2px;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    border:1.5px solid var(--paper);
+  }
+  .btn.solid{background:var(--mustard);color:var(--ink);border-color:var(--mustard);}
+  .btn.solid:hover{background:#c98d05;}
+  .btn.outline{color:var(--paper);}
+  .btn.outline:hover{background:rgba(251,243,231,0.1);}
+
+  .scallop{
+    height:26px;
+    margin-top:56px;
+    background-image:radial-gradient(circle at 13px 0, transparent 12px, var(--paper) 13px);
+    background-size:26px 26px;
+    background-repeat:repeat-x;
+    background-position:top;
+  }
+
+  /* ---------- ingredient ticker ---------- */
+  .ticker{
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    overflow:hidden;
+    white-space:nowrap;
+    padding:13px 0;
+    margin-top:52px;
+  }
+  .ticker-track{
+    display:inline-flex;
+    animation:tick 30s linear infinite;
+  }
+  .ticker-track span{
+    font-family:'Space Mono',monospace;
+    font-size:12.5px;
+    color:var(--ink-soft);
+    padding:0 26px;
+    display:inline-flex;
+    align-items:center;
+    gap:26px;
+    letter-spacing:0.03em;
+  }
+  .ticker-track span::after{content:"·";color:var(--mustard);font-size:16px;}
+  @keyframes tick{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+  @media (prefers-reduced-motion: reduce){.ticker-track{animation:none;}}
+
+  /* ---------- section shell ---------- */
+  section{
+    max-width:1180px;
+    margin:0 auto;
+    padding:96px 32px;
+  }
+  .section-head{
+    text-align:center;
+    margin-bottom:56px;
+  }
+  .kicker{
+    font-family:'Space Mono',monospace;
+    font-size:12.5px;
+    color:var(--brick);
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    display:block;
+    margin-bottom:14px;
+  }
+  .section-title{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:clamp(30px,4vw,44px);
+  }
+
+  /* ---------- menu ---------- */
+  .menu-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:44px;
+  }
+  .menu-cat h3{
+    font-family:'Fraunces',serif;
+    font-style:italic;
+    font-weight:600;
+    font-size:21px;
+    color:var(--brick);
+    margin:0 0 22px;
+    padding-bottom:12px;
+    border-bottom:1px solid var(--line);
+  }
+  .dish{
+    display:flex;
+    align-items:baseline;
+    gap:6px;
+    margin-bottom:20px;
+  }
+  .dish-name{
+    font-weight:500;
+    font-size:15px;
+    white-space:nowrap;
+  }
+  .dish-leader{
+    flex:1;
+    border-bottom:1.5px dotted var(--line);
+    transform:translateY(-4px);
+  }
+  .dish-price{
+    font-family:'Space Mono',monospace;
+    font-size:13px;
+    color:var(--ink-soft);
+  }
+  .dish-desc{
+    font-size:12.5px;
+    color:var(--ink-soft);
+    margin:-14px 0 20px;
+    line-height:1.5;
+    max-width:88%;
+  }
+
+  /* ---------- story ---------- */
+  .story{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:60px;
+    align-items:center;
+  }
+  .story-visual{
+    aspect-ratio:4/5;
+    border-radius:6px;
+    position:relative;
+    overflow:hidden;
+    background:var(--teal);
+  }
+  .story-visual img{
+    width:100%;height:100%;
+    object-fit:cover;
+  }
+  .story-visual::before{
+    content:"";
+    position:absolute;inset:0;
+    background:linear-gradient(180deg, rgba(15,76,67,0) 40%, rgba(15,76,67,0.65) 100%);
+  }
+  .story-visual .tag{
+    position:absolute;
+    bottom:20px;left:20px;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Space Mono',monospace;
+    font-size:11.5px;
+    padding:8px 14px;
+    border-radius:2px;
+  }
+  .story-copy p{
+    font-size:16.5px;
+    line-height:1.8;
+    color:#4A3E33;
+    margin:0 0 18px;
+  }
+  .story-copy strong{color:var(--ink);}
+  .story-stats{
+    display:flex;
+    gap:36px;
+    margin-top:32px;
+  }
+  .story-stats div{border-left:2px solid var(--mustard);padding-left:14px;}
+  .story-stats .num{
+    font-family:'Fraunces',serif;
+    font-weight:700;
+    font-size:26px;
+    display:block;
+  }
+  .story-stats .lbl{
+    font-family:'Space Mono',monospace;
+    font-size:11px;
+    color:var(--ink-soft);
+  }
+
+  /* ---------- gallery ---------- */
+  .gallery{
+    display:grid;
+    grid-template-columns:1.3fr 1fr 1fr;
+    grid-template-rows:180px 180px;
+    gap:14px;
+  }
+  .gallery .g1{grid-row:1/3;}
+  .gtile{
+    border-radius:6px;
+    position:relative;
+    overflow:hidden;
+    background:var(--teal-soft);
+  }
+  .gtile img{
+    width:100%;height:100%;
+    object-fit:cover;
+    display:block;
+  }
+  .gtile span{
+    position:absolute;
+    bottom:12px;left:14px;
+    font-family:'Space Mono',monospace;
+    font-size:11px;
+    color:var(--paper);
+    background:rgba(43,33,27,0.55);
+    padding:4px 9px;
+    border-radius:2px;
+  }
+
+  /* ---------- visit ---------- */
+  .visit-block{
+    background:var(--teal);
+    color:var(--paper);
+    border-radius:6px;
+    padding:64px 48px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:48px;
+  }
+  .visit-block h2{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:clamp(26px,3.4vw,36px);
+    margin:0 0 22px;
+  }
+  .visit-row{
+    display:flex;
+    justify-content:space-between;
+    padding:14px 0;
+    border-bottom:1px solid rgba(251,243,231,0.18);
+    font-size:14px;
+  }
+  .visit-row:last-child{border-bottom:none;}
+  .visit-row .d{color:#DCE7E3;}
+  .visit-row .v{font-family:'Space Mono',monospace;font-size:13px;}
+  .map-card{
+    background:rgba(251,243,231,0.07);
+    border:1px solid rgba(251,243,231,0.18);
+    border-radius:6px;
+    padding:28px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+  }
+  .map-card .addr{
+    font-family:'Space Mono',monospace;
+    font-size:13px;
+    line-height:1.8;
+    color:#DCE7E3;
+  }
+  .map-card .btn{margin-top:20px;width:fit-content;}
+
+  footer{
+    text-align:center;
+    padding:36px 32px 44px;
+    font-family:'Space Mono',monospace;
+    font-size:11px;
+    color:var(--ink-soft);
+  }
+
+  @media (max-width:900px){
+    .menu-grid{grid-template-columns:1fr;gap:40px;}
+    .story{grid-template-columns:1fr;}
+    .gallery{grid-template-columns:1fr 1fr;grid-template-rows:150px 150px 150px;}
+    .gallery .g1{grid-row:auto;grid-column:1/3;height:180px;}
+    .visit-block{grid-template-columns:1fr;padding:44px 26px;}
+    .nav-links{display:none;}
+    .hero-frame{padding:56px 24px 0;}
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wordmark">Ronno<span>.</span></div>
+  <div class="nav-links">
+    <a href="#menu">Menu</a>
+    <a href="#story">Our Story</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#visit">Visit</a>
+  </div>
+  <a href="#visit" class="nav-cta">Reserve a table</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-frame">
+    <img class="hero-bg" src="https://images.unsplash.com/photo-1589778655375-3e622a9fc91c?fm=jpg&q=70&w=1600&auto=format&fit=crop" alt="">
+    <svg class="motif-corner tl" viewBox="0 0 100 100" fill="none" stroke="#E3A008" stroke-width="1.4">
+      <path d="M10 90 C10 50 50 50 50 10" />
+      <circle cx="50" cy="10" r="4"/>
+      <circle cx="10" cy="90" r="4"/>
+      <path d="M22 78 C22 55 45 55 45 32" opacity="0.6"/>
+    </svg>
+    <svg class="motif-corner tr" viewBox="0 0 100 100" fill="none" stroke="#E3A008" stroke-width="1.4">
+      <path d="M10 90 C10 50 50 50 50 10" />
+      <circle cx="50" cy="10" r="4"/>
+      <circle cx="10" cy="90" r="4"/>
+      <path d="M22 78 C22 55 45 55 45 32" opacity="0.6"/>
+    </svg>
+
+    <div class="hero-eyebrow">Salt Lake, Sector V · Kolkata</div>
+    <h1 class="hero-title">Bengal, <span class="not-italic">plated</span><br>for today.</h1>
+    <p class="hero-sub">Ronno reworks the flavours of a Bengali kitchen — mustard, river fish, slow-cooked mangsho — into a menu built for how people eat now.</p>
+    <div class="hero-cta">
+      <a href="#visit" class="btn solid">Reserve a table</a>
+      <a href="#menu" class="btn outline">View the menu</a>
+    </div>
+    <div class="scallop"></div>
+  </div>
+
+  <div class="ticker">
+    <div class="ticker-track">
+      <span>KASUNDI MUSTARD</span><span>GONDHORAJ LIME</span><span>RIVER PRAWN</span><span>POSTO</span><span>NOLEN GUR</span><span>PANCH PHORON</span>
+      <span>KASUNDI MUSTARD</span><span>GONDHORAJ LIME</span><span>RIVER PRAWN</span><span>POSTO</span><span>NOLEN GUR</span><span>PANCH PHORON</span>
+    </div>
+  </div>
+</div>
+
+<section id="menu">
+  <div class="section-head">
+    <span class="kicker">The Menu</span>
+    <h2 class="section-title">A shorter list, done properly.</h2>
+  </div>
+  <div class="menu-grid">
+    <div class="menu-cat">
+      <h3>Starters</h3>
+      <div class="dish"><span class="dish-name">Mochar Chop</span><span class="dish-leader"></span><span class="dish-price">₹180</span></div>
+      <p class="dish-desc">Banana blossom croquette, coconut, roasted spice.</p>
+      <div class="dish"><span class="dish-name">Fish Kabiraji</span><span class="dish-leader"></span><span class="dish-price">₹260</span></div>
+      <p class="dish-desc">Bhetki in a lace-edged egg batter, kasundi mayo.</p>
+      <div class="dish"><span class="dish-name">Beguni</span><span class="dish-leader"></span><span class="dish-price">₹140</span></div>
+      <p class="dish-desc">Besan-fried eggplant, tamarind drizzle.</p>
+    </div>
+    <div class="menu-cat">
+      <h3>Mains</h3>
+      <div class="dish"><span class="dish-name">Bhetki Paturi</span><span class="dish-leader"></span><span class="dish-price">₹420</span></div>
+      <p class="dish-desc">Mustard-marinated fish, steamed in banana leaf.</p>
+      <div class="dish"><span class="dish-name">Kosha Mangsho</span><span class="dish-leader"></span><span class="dish-price">₹380</span></div>
+      <p class="dish-desc">Slow-roasted mutton, dry red chilli, mustard oil.</p>
+      <div class="dish"><span class="dish-name">Chingri Malai Curry</span><span class="dish-leader"></span><span class="dish-price">₹460</span></div>
+      <p class="dish-desc">River prawn in coconut, gently spiced.</p>
+    </div>
+    <div class="menu-cat">
+      <h3>Sweets</h3>
+      <div class="dish"><span class="dish-name">Nolen Gur Rasgulla</span><span class="dish-leader"></span><span class="dish-price">₹120</span></div>
+      <p class="dish-desc">Date-jaggery syrup, seasonal only.</p>
+      <div class="dish"><span class="dish-name">Bhapa Doi</span><span class="dish-leader"></span><span class="dish-price">₹140</span></div>
+      <p class="dish-desc">Steamed sweetened yoghurt, cardamom.</p>
+      <div class="dish"><span class="dish-name">Mishti Doi Tart</span><span class="dish-leader"></span><span class="dish-price">₹160</span></div>
+      <p class="dish-desc">Caramelised yoghurt, roasted rice-flake crust.</p>
+    </div>
+  </div>
+</section>
+
+<section id="story">
+  <div class="story">
+    <div class="story-visual">
+      <img src="https://images.unsplash.com/photo-1683533678059-63c6a0e9e3ef?fm=jpg&q=70&w=1200&auto=format&fit=crop" alt="Fish paturi served wrapped in banana leaf">
+      <span class="tag">Ronno — the kitchen</span>
+    </div>
+    <div class="story-copy">
+      <span class="kicker">Our Story</span>
+      <p><strong>Ronno started as a family recipe book</strong> that outgrew the kitchen. Every dish on this menu traces back to something cooked at home first — a grandmother's mustard paste, a fish curry that only tastes right in monsoon.</p>
+      <p>We kept the technique and let the presentation change. Nothing here is fusion for its own sake — it's the same food, given the attention a proper sitting deserves.</p>
+      <div class="story-stats">
+        <div><span class="num">2019</span><span class="lbl">OPENED</span></div>
+        <div><span class="num">40+</span><span class="lbl">DISHES</span></div>
+        <div><span class="num">100%</span><span class="lbl">BENGALI ROOTS</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="gallery">
+  <div class="section-head">
+    <span class="kicker">Gallery</span>
+    <h2 class="section-title">A glimpse of the table.</h2>
+  </div>
+  <div class="gallery">
+    <div class="gtile g1">
+      <img src="https://images.unsplash.com/photo-1538334421852-687c439c92f4?fm=jpg&q=70&w=900&auto=format&fit=crop" alt="Ronno dining room with wooden tables">
+      <span>The dining room</span>
+    </div>
+    <div class="gtile g2">
+      <img src="https://images.unsplash.com/photo-1631515242808-497c3fbd3972?fm=jpg&q=70&w=700&auto=format&fit=crop" alt="Bowls of curry and sauces on the table">
+      <span>Kosha mangsho</span>
+    </div>
+    <div class="gtile g3">
+      <img src="https://images.unsplash.com/photo-1743674453123-93356ade2891?fm=jpg&q=70&w=700&auto=format&fit=crop" alt="Plate of rice and south asian dishes">
+      <span>Bhetki paturi</span>
+    </div>
+    <div class="gtile g4">
+      <img src="https://images.unsplash.com/photo-1730705511504-9997ee641c99?fm=jpg&q=70&w=700&auto=format&fit=crop" alt="Bowl of sweet white dessert balls">
+      <span>Nolen gur rasgulla</span>
+    </div>
+  </div>
+</section>
+
+<section id="visit">
+  <div class="visit-block">
+    <div>
+      <h2>Visit us</h2>
+      <div class="visit-row"><span class="d">Mon – Fri</span><span class="v">12:00 – 22:30</span></div>
+      <div class="visit-row"><span class="d">Sat – Sun</span><span class="v">12:00 – 23:00</span></div>
+      <div class="visit-row"><span class="d">Reservations</span><span class="v">Recommended</span></div>
+      <div class="visit-row"><span class="d">Avg. for two</span><span class="v">₹1,400</span></div>
+    </div>
+    <div class="map-card">
+      <div class="addr">
+        RONNO — MODERN BENGALI KITCHEN<br>
+        SECTOR V, SALT LAKE<br>
+        KOLKATA, WEST BENGAL 700091<br><br>
+        +91 00000 00000<br>
+        hello@ronno.example
+      </div>
+      <a href="#" class="btn solid" style="border-color:var(--mustard)">Reserve a table →</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  RONNO · MODERN BENGALI KITCHEN · SALT LAKE, KOLKATA · <span id="year"></span>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>
